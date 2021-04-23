@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis-master
+spec:
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  project: devlop
+  destination:
+    namespace: devlop
+    server: https://kubernetes.default.svc
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    name: redis-master
+    namespace: devlop
+    jsonPointers:
+    - /spec/replicas
+  source:
+    repoURL: https://github.com/naokivandit/k8s-guestbook.git
+    targetRevision: master
+    path: 'k8s/redis-master/overlays/dev'
