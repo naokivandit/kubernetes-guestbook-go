@@ -1,0 +1,3 @@
+resources:
+- replication_controller.yaml
+- service.yaml
